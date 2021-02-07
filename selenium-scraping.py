@@ -35,15 +35,22 @@ def main():
                     {
                         'name': elem.find_element_by_class_name('result-intro__header').text,
                         'time': elem.find_element_by_class_name('daily-hours__range').text,
-                        'discrpition': elem.find_element_by_class_name('result-intro__address').text,
+                        'description': elem.find_element_by_class_name('result-intro__address').text,
                         'rate': elem.find_element_by_class_name('result-intro__rating__note').text,
                     }
                 )
         except NoSuchElementException:
-            pass
-    print(elements)
+            continue
+        print(elements)
+
+    print(all_elems)
 
 
+    with open('cards.csv', 'w', newline='' ) as file:
+        writer = csv.writer(file, delimiter=';')
+        writer.writerow(['Name', 'Time', 'Description', 'Rate'])
+        for elem1 in elements:
+            writer.writerow([elem1['name'], elem1['time'], elem1['description'], elem1['rate']])
 
 
     time.sleep(5)
